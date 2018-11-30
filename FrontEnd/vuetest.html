@@ -1,0 +1,56 @@
+<html>
+    <head>
+        
+        <script type="text/javascript">
+            //向服务器请求数据
+            var obj
+            function init() {
+                //console.log("a");
+                var xmlhttp;
+                if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                }
+                else {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        obj = JSON.parse(xmlhttp.responseText); //字符串转对象，可以用obj.xxx
+                    }
+                }
+                xmlhttp.open("GET", "/vuetestdata", false);
+                xmlhttp.send();
+            }
+            window.onload = init();
+        </script>
+    </head>
+    <body>
+        <div id="app">
+            <p>{{ message }}</p>
+        </div>
+        <div id='music_info'>
+            <p>{{music_name}}</p>
+            <p>{{music_url}}</p>
+        </div>
+        <script src="ref/vue.js"></script>
+        <script type="text/javascript">
+            var app = new Vue({ 
+                el: '#app',
+                data: {
+                    message: 'Hello Vue!'
+                }
+            });
+        </script>
+
+        <script type="text/javascript">
+        var music_info = new Vue({ 
+            el: '#music_info',
+            data (){
+                return obj;
+            }
+        });
+</script>
+
+    </body>
+
+</html>
